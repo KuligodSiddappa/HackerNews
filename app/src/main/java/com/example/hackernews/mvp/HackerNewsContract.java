@@ -44,6 +44,8 @@ public interface HackerNewsContract {
         void init();
 
         void updateNews(ArrayList<NewsDataModel> news);
+
+        void showError(String message);
     }
 
 

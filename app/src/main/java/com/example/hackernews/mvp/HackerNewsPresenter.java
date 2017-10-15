@@ -31,7 +31,7 @@ public class HackerNewsPresenter implements HackerNewsContract.ViewEvents,
 
     @Override
     public void onFailure(String messsage) {
-        
+
     }
 
     @Override

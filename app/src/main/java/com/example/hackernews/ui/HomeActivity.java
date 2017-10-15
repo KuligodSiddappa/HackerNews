@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.hackernews.R;
 import com.example.hackernews.Utils;
@@ -81,7 +82,12 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
 
     @Override
     public void updateNews(ArrayList<NewsDataModel> news) {
-        Log.e(TAG, "News Fetched : " + news.toString());
+        Log.d(TAG, "News Fetched : " + news.toString());
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(this," "+message,Toast.LENGTH_LONG).show();
     }
 
     @Override
