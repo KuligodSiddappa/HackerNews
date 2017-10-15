@@ -32,7 +32,7 @@
             android:id="@+id/Button_Politics"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:text="@string/politics"
             android:textStyle="bold" />
 
@@ -47,10 +47,9 @@
 
     </LinearLayout>
 
-    <android.support.v7.app.AlertController.RecycleListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/hacker_news_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-    </android.support.v7.app.AlertController.RecycleListView>
 </LinearLayout>
