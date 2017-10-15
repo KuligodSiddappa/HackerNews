@@ -26,12 +26,12 @@ public class HackerNewsPresenter implements HackerNewsContract.ViewEvents,
 
     @Override
     public void onNewsResult(ArrayList<NewsDataModel> newsDataModels) {
-
+        mViewUpdates.updateNews(newsDataModels);
     }
 
     @Override
     public void onFailure(String messsage) {
-
+        mViewUpdates.showError(messsage);
     }
 
     @Override

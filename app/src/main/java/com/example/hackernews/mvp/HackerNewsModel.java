@@ -83,7 +83,7 @@ public class HackerNewsModel implements HackerNewsContract.ModelUpdates {
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        response.body().getHits();
+                        onData(response.body().getHits());
                     }
                 }
             }
