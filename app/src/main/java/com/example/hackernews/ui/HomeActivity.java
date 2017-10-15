@@ -3,22 +3,33 @@ package com.example.hackernews.ui;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.hackernews.R;
+import com.example.hackernews.Utils;
 import com.example.hackernews.mvp.HackerNewsContract;
 import com.example.hackernews.mvp.HackerNewsModel;
 import com.example.hackernews.mvp.HackerNewsPresenter;
+import com.example.hackernews.newsmodel.NewsDataModel;
 import com.example.hackernews.ui.adapter.HackerNewsAdapter;
 import com.example.hackernews.ui.adapter.ItemClickEvent;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity implements HackerNewsContract.ViewUpdates,
-        ItemClickEvent{
+        ItemClickEvent, View.OnClickListener {
+    private static final String TAG = "HomeActivity";
     private HackerNewsModel mModel;
     private HackerNewsPresenter mPresenter;
 
     private RecyclerView mRecyclerView;
     private HackerNewsAdapter mAdapter;
+    private Button mSportsButton;
+    private Button mBollywoodButton;
+    private Button mPoliticsButton;
+    private Button mArtsButton;
 
 
     private void setupMvp() {
@@ -43,6 +54,11 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
 
         setupMvp();
 
+        mSportsButton = (Button) findViewById(R.id.Button_Sports);
+        mBollywoodButton = (Button) findViewById(R.id.Button_Bollywood);
+        mPoliticsButton = (Button) findViewById(R.id.Button_Politics);
+        mArtsButton = (Button) findViewById(R.id.Button_Art);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.hacker_news_list);
         mAdapter = new HackerNewsAdapter();
         mAdapter.registerForItemClick(this);
@@ -50,8 +66,22 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
     }
 
     @Override
-    public void init() {
+    protected void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
 
+    @Override
+    public void init() {
+        mSportsButton.setOnClickListener(this);
+        mBollywoodButton.setOnClickListener(this);
+        mPoliticsButton.setOnClickListener(this);
+        mArtsButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void updateNews(ArrayList<NewsDataModel> news) {
+        Log.e(TAG, "News Fetched : " + news.toString());
     }
 
     @Override
@@ -63,5 +93,30 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
     protected void onDestroy() {
         super.onDestroy();
         tearDownMvp();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.Button_Sports: {
+                mPresenter.onButtonClick(Utils.SPORTS);
+            }
+            break;
+
+            case R.id.Button_Bollywood: {
+                mPresenter.onButtonClick(Utils.BOLLYWOOD);
+            }
+            break;
+
+            case R.id.Button_Politics: {
+                mPresenter.onButtonClick(Utils.POLITICS);
+            }
+            break;
+
+            case R.id.Button_Art: {
+                mPresenter.onButtonClick(Utils.ART);
+            }
+            break;
+        }
     }
 }

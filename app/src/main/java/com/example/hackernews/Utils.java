@@ -1,8 +1,16 @@
 package com.example.hackernews;
 
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 public class Utils {
+    public static final int SPORTS = 0;
+    public static final int BOLLYWOOD = 1;
+    public static final int POLITICS = 2;
+    public static final int ART = 3;
 
     /**
      * Ensures that an object reference passed as a parameter to the calling method is not null.

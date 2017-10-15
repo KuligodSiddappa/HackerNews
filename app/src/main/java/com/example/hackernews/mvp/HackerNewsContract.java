@@ -2,6 +2,9 @@ package com.example.hackernews.mvp;
 
 
 import com.example.hackernews.newsmodel.IHackerNewsEvents;
+import com.example.hackernews.newsmodel.NewsDataModel;
+
+import java.util.ArrayList;
 
 /**
  * Holder of all the interfaces which help in establishing the contract between the Model, View and
@@ -9,7 +12,6 @@ import com.example.hackernews.newsmodel.IHackerNewsEvents;
  * and Presenter.
  */
 public interface HackerNewsContract {
-
     /**
      * Interface to be implemented by the presenter.
      * Provides operations offered to View to communicate with Presenter.
@@ -17,6 +19,9 @@ public interface HackerNewsContract {
      */
     interface ViewEvents {
 
+        void onButtonClick(int buttonType);
+
+        void start();
     }
 
 
@@ -24,7 +29,7 @@ public interface HackerNewsContract {
      * Interface to be implemented by the presenter.
      * Provides required Presenter methods available to Model.
      */
-    interface ModelEvents extends IHackerNewsEvents{
+    interface ModelEvents extends IHackerNewsEvents {
 
     }
 
@@ -37,6 +42,8 @@ public interface HackerNewsContract {
     interface ViewUpdates {
 
         void init();
+
+        void updateNews(ArrayList<NewsDataModel> news);
     }
 
 
@@ -46,6 +53,7 @@ public interface HackerNewsContract {
      * Handles all data business logic.
      */
     interface ModelUpdates {
-
+        void queryNews(String category);
     }
+
 }

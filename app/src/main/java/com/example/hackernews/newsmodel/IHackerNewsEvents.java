@@ -1,13 +1,11 @@
 package com.example.hackernews.newsmodel;
 
 
+import java.util.ArrayList;
+
 public interface IHackerNewsEvents {
 
-    void onSportsNews();
+    void onNewsResult(ArrayList<NewsDataModel> newsDataModels);
 
-    void onBollywoodNews();
-
-    void onPoliticsNews();
-
-    void onArtNews();
+    void onFailure(String messsage);
 }
