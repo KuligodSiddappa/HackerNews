@@ -30,6 +30,11 @@ public class HackerNewsPresenter implements HackerNewsContract.ViewEvents,
     }
 
     @Override
+    public void onFailure(String messsage) {
+        
+    }
+
+    @Override
     public void onButtonClick(int buttonType) {
         switch(buttonType){
             case Utils.SPORTS:
