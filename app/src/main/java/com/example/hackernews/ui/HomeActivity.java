@@ -63,7 +63,7 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
         mRecyclerView = (RecyclerView) findViewById(R.id.hacker_news_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new HackerNewsAdapter();
+        mAdapter = new HackerNewsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.registerForItemClick(this);
 

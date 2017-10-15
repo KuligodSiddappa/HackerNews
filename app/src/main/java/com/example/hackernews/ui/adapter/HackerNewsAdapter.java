@@ -1,7 +1,9 @@
 package com.example.hackernews.ui.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,11 @@ public class HackerNewsAdapter extends RecyclerView.Adapter<HackerNewsAdapter.Ha
 
     private ItemClickEvent mItemClickEvent;
     private ArrayList<NewsDataModel> mDataModels = new ArrayList<>();
+    private Context mContext;
+
+    public HackerNewsAdapter(Context context) {
+        mContext = context;
+    }
 
     public void updateData(ArrayList<NewsDataModel> dataModels) {
         if (mDataModels != null && dataModels != null) {
@@ -63,7 +70,14 @@ public class HackerNewsAdapter extends RecyclerView.Adapter<HackerNewsAdapter.Ha
 
         @Override
         public void onClick(View view) {
+
             int clickPostion = getAdapterPosition();
+            String browserUrl = mDataModels.get(clickPostion).getUrl();
+            if (browserUrl != null) {
+                Uri uri = Uri.parse(browserUrl);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
+                mContext.startActivity(browserIntent);
+            }
         }
     }
 }
