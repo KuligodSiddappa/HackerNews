@@ -1,6 +1,7 @@
 package com.example.hackernews.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,14 @@ import java.util.ArrayList;
 public class HackerNewsAdapter extends RecyclerView.Adapter<HackerNewsAdapter.HackerNewsViewHolder> {
 
     private ItemClickEvent mItemClickEvent;
-    private ArrayList<NewsDataModel> dataModels = new ArrayList<>();
+    private ArrayList<NewsDataModel> mDataModels = new ArrayList<>();
 
     public void updateData(ArrayList<NewsDataModel> dataModels) {
-        this.dataModels = dataModels;
-        if (dataModels != null)
+        if (mDataModels != null && dataModels != null) {
+            mDataModels.clear();
+            mDataModels.addAll(dataModels);
             notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -34,13 +37,13 @@ public class HackerNewsAdapter extends RecyclerView.Adapter<HackerNewsAdapter.Ha
 
     @Override
     public void onBindViewHolder(HackerNewsViewHolder holder, int position) {
-        NewsDataModel dataModel = dataModels.get(position);
+        NewsDataModel dataModel = mDataModels.get(position);
         holder.newsTitle.setText(dataModel.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return dataModels.size();
+        return mDataModels.size();
     }
 
     public void registerForItemClick(ItemClickEvent event) {

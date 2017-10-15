@@ -86,7 +86,6 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
     @Override
     public void updateNews(ArrayList<NewsDataModel> news) {
         if (mAdapter != null && news != null){
-            Toast.makeText(this,"Items : "+news.size(),Toast.LENGTH_LONG).show();
             mAdapter.updateData(news);
         }
     }
