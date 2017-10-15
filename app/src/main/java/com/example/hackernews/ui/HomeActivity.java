@@ -2,8 +2,8 @@ package com.example.hackernews.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -61,7 +61,10 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
         mArtsButton = (Button) findViewById(R.id.Button_Art);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.hacker_news_list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setHasFixedSize(true);
         mAdapter = new HackerNewsAdapter();
+        mRecyclerView.setAdapter(mAdapter);
         mAdapter.registerForItemClick(this);
 
     }
@@ -82,12 +85,15 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
 
     @Override
     public void updateNews(ArrayList<NewsDataModel> news) {
-        Log.d(TAG, "News Fetched : " + news.toString());
+        if (mAdapter != null && news != null){
+            Toast.makeText(this,"Items : "+news.size(),Toast.LENGTH_LONG).show();
+            mAdapter.updateData(news);
+        }
     }
 
     @Override
     public void showError(String message) {
-        Toast.makeText(this," "+message,Toast.LENGTH_LONG).show();
+        Toast.makeText(this, " " + message, Toast.LENGTH_LONG).show();
     }
 
     @Override

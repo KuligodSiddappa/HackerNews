@@ -1,6 +1,5 @@
 package com.example.hackernews.ui.adapter;
 
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +8,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.hackernews.R;
+import com.example.hackernews.newsmodel.NewsDataModel;
+
+import java.util.ArrayList;
 
 public class HackerNewsAdapter extends RecyclerView.Adapter<HackerNewsAdapter.HackerNewsViewHolder> {
 
     private ItemClickEvent mItemClickEvent;
+    private ArrayList<NewsDataModel> dataModels = new ArrayList<>();
+
+    public void updateData(ArrayList<NewsDataModel> dataModels) {
+        this.dataModels = dataModels;
+        if (dataModels != null)
+            notifyDataSetChanged();
+    }
 
     @Override
     public HackerNewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -25,11 +34,17 @@ public class HackerNewsAdapter extends RecyclerView.Adapter<HackerNewsAdapter.Ha
 
     @Override
     public void onBindViewHolder(HackerNewsViewHolder holder, int position) {
+        NewsDataModel dataModel = dataModels.get(position);
+        holder.newsTitle.setText(dataModel.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataModels.size();
+    }
+
+    public void registerForItemClick(ItemClickEvent event) {
+        mItemClickEvent = event;
     }
 
     public class HackerNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -39,7 +54,7 @@ public class HackerNewsAdapter extends RecyclerView.Adapter<HackerNewsAdapter.Ha
         public HackerNewsViewHolder(View view) {
             super(view);
             newsTitle = (TextView) view.findViewById(R.id.news_item);
-            itemParent = (LinearLayout)view.findViewById(R.id.recycler_item_parent);
+            itemParent = (LinearLayout) view.findViewById(R.id.recycler_item_parent);
             itemParent.setOnClickListener(this);
         }
 
@@ -47,10 +62,5 @@ public class HackerNewsAdapter extends RecyclerView.Adapter<HackerNewsAdapter.Ha
         public void onClick(View view) {
             int clickPostion = getAdapterPosition();
         }
-    }
-
-
-    public void registerForItemClick(ItemClickEvent event){
-        mItemClickEvent = event;
     }
 }
