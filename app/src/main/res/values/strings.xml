@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">HackerNews</string>
+    <string name="sports">Sports</string>
+    <string name="bollywood">Bollywood</string>
+    <string name="politics">Politics</string>
+    <string name="art">Art</string>
 </resources>
