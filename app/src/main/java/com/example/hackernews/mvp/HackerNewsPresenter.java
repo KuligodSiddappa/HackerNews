@@ -17,7 +17,7 @@ public class HackerNewsPresenter implements HackerNewsContract.ViewEvents,
     private HackerNewsContract.ModelUpdates mModel;
     private HackerNewsContract.ViewUpdates mViewUpdates;
 
-    public HackerNewsPresenter(HackerNewsContract.ViewUpdates view, HackerNewsModel model) {
+    public HackerNewsPresenter(HackerNewsContract.ViewUpdates view, HackerNewsContract.ModelUpdates model) {
         mView = new WeakReference<>(Utils.checkNotNull(view, "View should not be null"));
         mViewUpdates = mView.get();
         mModel = Utils.checkNotNull(model, "Model Should not be null");
@@ -26,6 +26,7 @@ public class HackerNewsPresenter implements HackerNewsContract.ViewEvents,
 
     @Override
     public void onNewsResult(ArrayList<NewsDataModel> newsDataModels) {
+        Utils.checkNotNull(newsDataModels,"Data should not be null");
         mViewUpdates.updateNews(newsDataModels);
     }
 
