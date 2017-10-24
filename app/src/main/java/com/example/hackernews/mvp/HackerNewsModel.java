@@ -2,6 +2,7 @@ package com.example.hackernews.mvp;
 
 import android.util.Log;
 
+import com.example.hackernews.Utils;
 import com.example.hackernews.network.BaseApi;
 import com.example.hackernews.network.IApiEvents;
 import com.example.hackernews.newsmodel.ApiResponse;
@@ -12,6 +13,7 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HackerNewsModel implements HackerNewsContract.ModelUpdates {
 
     private static HackerNewsModel sModel;
-    private Retrofit mRetrofit;
+    private IApiEvents mApiEvents;
     private List<IHackerNewsEvents> mHackerNewsEventsList = new ArrayList<>();
 
     private int mTotalPages;
@@ -32,14 +34,6 @@ public class HackerNewsModel implements HackerNewsContract.ModelUpdates {
 
     private HackerNewsModel() {
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        mRetrofit = new Retrofit.Builder()
-                .baseUrl(BaseApi.BASE_URl)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
     }
 
     /**
@@ -56,6 +50,10 @@ public class HackerNewsModel implements HackerNewsContract.ModelUpdates {
             }
         }
         return sModel;
+    }
+
+    public void setApiEvents(IApiEvents events) {
+        this.mApiEvents = events;
     }
 
     /**
@@ -83,10 +81,11 @@ public class HackerNewsModel implements HackerNewsContract.ModelUpdates {
 
     @Override
     public void queryNews(String category, int page) {
+        Utils.checkNotNull(category, "Category should not be null");
 
         mCurrentCategory = category;
 
-        Call<ApiResponse> call = mRetrofit.create(IApiEvents.class).loadData(category, page);
+        Call<ApiResponse> call = mApiEvents.loadData(category, page);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

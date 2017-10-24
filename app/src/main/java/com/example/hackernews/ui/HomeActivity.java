@@ -13,12 +13,19 @@ import com.example.hackernews.Utils;
 import com.example.hackernews.mvp.HackerNewsContract;
 import com.example.hackernews.mvp.HackerNewsModel;
 import com.example.hackernews.mvp.HackerNewsPresenter;
+import com.example.hackernews.network.BaseApi;
 import com.example.hackernews.network.EndApi;
+import com.example.hackernews.network.IApiEvents;
 import com.example.hackernews.newsmodel.NewsDataModel;
 import com.example.hackernews.ui.adapter.HackerNewsAdapter;
 import com.example.hackernews.ui.adapter.ItemClickEvent;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeActivity extends AppCompatActivity implements HackerNewsContract.ViewUpdates,
         ItemClickEvent, View.OnClickListener {
@@ -37,6 +44,19 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
     private void setupMvp() {
         //create the model
         mModel = HackerNewsModel.getInstance();
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BaseApi.BASE_URl)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        IApiEvents apiEvents = retrofit.create(IApiEvents.class);
+
+        mModel.setApiEvents(apiEvents);
 
         //create the presenter
         mPresenter = new HackerNewsPresenter(this, mModel);
