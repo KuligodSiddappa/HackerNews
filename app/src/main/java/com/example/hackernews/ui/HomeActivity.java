@@ -13,6 +13,7 @@ import com.example.hackernews.Utils;
 import com.example.hackernews.mvp.HackerNewsContract;
 import com.example.hackernews.mvp.HackerNewsModel;
 import com.example.hackernews.mvp.HackerNewsPresenter;
+import com.example.hackernews.network.EndApi;
 import com.example.hackernews.newsmodel.NewsDataModel;
 import com.example.hackernews.ui.adapter.HackerNewsAdapter;
 import com.example.hackernews.ui.adapter.ItemClickEvent;
@@ -127,21 +128,33 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Button_Sports: {
+                if (mPresenter.getCurrentCategory() != null
+                        && !mPresenter.getCurrentCategory().equals(EndApi.SPORTS))
+                    mAdapter.clear();
                 mPresenter.onButtonClick(Utils.SPORTS);
             }
             break;
 
             case R.id.Button_Bollywood: {
+                if (mPresenter.getCurrentCategory() != null
+                        && !mPresenter.getCurrentCategory().equals(EndApi.BOLLYWOOD))
+                    mAdapter.clear();
                 mPresenter.onButtonClick(Utils.BOLLYWOOD);
             }
             break;
 
             case R.id.Button_Politics: {
+                if (mPresenter.getCurrentCategory() != null
+                        && !mPresenter.getCurrentCategory().equals(EndApi.POLITICS))
+                    mAdapter.clear();
                 mPresenter.onButtonClick(Utils.POLITICS);
             }
             break;
 
             case R.id.Button_Art: {
+                if (mPresenter.getCurrentCategory() != null
+                        && !mPresenter.getCurrentCategory().equals(EndApi.ARTS))
+                    mAdapter.clear();
                 mPresenter.onButtonClick(Utils.ART);
             }
             break;

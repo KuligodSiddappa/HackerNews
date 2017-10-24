@@ -1,5 +1,7 @@
 package com.example.hackernews.mvp;
 
+import android.util.Log;
+
 import com.example.hackernews.network.BaseApi;
 import com.example.hackernews.network.IApiEvents;
 import com.example.hackernews.newsmodel.ApiResponse;

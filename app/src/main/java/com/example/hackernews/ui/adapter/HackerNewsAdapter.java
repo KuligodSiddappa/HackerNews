@@ -27,10 +27,14 @@ public class HackerNewsAdapter extends RecyclerView.Adapter<HackerNewsAdapter.Ha
 
     public void updateData(ArrayList<NewsDataModel> dataModels) {
         if (mDataModels != null && dataModels != null) {
-            mDataModels.clear();
             mDataModels.addAll(dataModels);
             notifyDataSetChanged();
         }
+    }
+
+    public void clear() {
+        if (mDataModels != null)
+            mDataModels.clear();
     }
 
     @Override
