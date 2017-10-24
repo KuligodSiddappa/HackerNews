@@ -38,16 +38,16 @@ public class HackerNewsPresenter implements HackerNewsContract.ViewEvents,
     public void onButtonClick(int buttonType) {
         switch (buttonType) {
             case Utils.SPORTS:
-                mModel.queryNews(EndApi.SPORTS, Utils.DEFAULT_PAGE);
+                queryNews(EndApi.SPORTS, Utils.DEFAULT_PAGE);
                 break;
             case Utils.BOLLYWOOD:
-                mModel.queryNews(EndApi.BOLLYWOOD, Utils.DEFAULT_PAGE);
+                queryNews(EndApi.BOLLYWOOD, Utils.DEFAULT_PAGE);
                 break;
             case Utils.POLITICS:
-                mModel.queryNews(EndApi.POLITICS, Utils.DEFAULT_PAGE);
+                queryNews(EndApi.POLITICS, Utils.DEFAULT_PAGE);
                 break;
             case Utils.ART:
-                mModel.queryNews(EndApi.ARTS, Utils.DEFAULT_PAGE);
+                queryNews(EndApi.ARTS, Utils.DEFAULT_PAGE);
                 break;
         }
 
@@ -56,5 +56,30 @@ public class HackerNewsPresenter implements HackerNewsContract.ViewEvents,
     @Override
     public void start() {
         mViewUpdates.init();
+    }
+
+    @Override
+    public int getTotalPages() {
+        return mModel.getTotalPages();
+    }
+
+    @Override
+    public int getCurrentPage() {
+        return mModel.getCurrentPage();
+    }
+
+    @Override
+    public boolean isPageLoading() {
+        return mModel.isPageLoading();
+    }
+
+    @Override
+    public String getCurrentCategory() {
+        return mModel.getCurrentCategory();
+    }
+
+    @Override
+    public void queryNews(String category, int page) {
+        mModel.queryNews(category, page);
     }
 }

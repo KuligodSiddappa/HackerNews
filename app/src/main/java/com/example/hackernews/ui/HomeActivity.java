@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
     private Button mBollywoodButton;
     private Button mPoliticsButton;
     private Button mArtsButton;
-
+    private LinearLayoutManager mLinearLayoutManager;
 
     private void setupMvp() {
         //create the model
@@ -61,11 +61,28 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
         mArtsButton = (Button) findViewById(R.id.Button_Art);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.hacker_news_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new HackerNewsAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.registerForItemClick(this);
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                int visibleItems = recyclerView.getChildCount();
+                int totalItems = mLinearLayoutManager.getItemCount();
+                int firstVisibleItemPosition = mLinearLayoutManager.findFirstVisibleItemPosition();
+
+                if (!mPresenter.isPageLoading() && (totalItems - visibleItems) <= (firstVisibleItemPosition + 5)
+                        && mPresenter.getCurrentPage() < mPresenter.getTotalPages()) {
+                    mPresenter.queryNews(mPresenter.getCurrentCategory(), mPresenter.getCurrentPage() + 1);
+                }
+            }
+        });
 
     }
 
@@ -85,7 +102,7 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
 
     @Override
     public void updateNews(ArrayList<NewsDataModel> news) {
-        if (mAdapter != null && news != null){
+        if (mAdapter != null && news != null) {
             mAdapter.updateData(news);
         }
     }

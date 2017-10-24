@@ -4,7 +4,6 @@ import com.example.hackernews.network.BaseApi;
 import com.example.hackernews.network.IApiEvents;
 import com.example.hackernews.newsmodel.ApiResponse;
 import com.example.hackernews.newsmodel.IHackerNewsEvents;
-import com.example.hackernews.newsmodel.NewsDataModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -22,6 +21,11 @@ public class HackerNewsModel implements HackerNewsContract.ModelUpdates {
     private static HackerNewsModel sModel;
     private Retrofit mRetrofit;
     private List<IHackerNewsEvents> mHackerNewsEventsList = new ArrayList<>();
+
+    private int mTotalPages;
+    private int mCurrentPage;
+    private boolean mIsLoading;
+    private String mCurrentCategory;
 
 
     private HackerNewsModel() {
@@ -77,13 +81,16 @@ public class HackerNewsModel implements HackerNewsContract.ModelUpdates {
 
     @Override
     public void queryNews(String category, int page) {
+
+        mCurrentCategory = category;
+
         Call<ApiResponse> call = mRetrofit.create(IApiEvents.class).loadData(category, page);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        onData(response.body().getHits());
+                        onData(response.body());
                     }
                 }
             }
@@ -96,11 +103,32 @@ public class HackerNewsModel implements HackerNewsContract.ModelUpdates {
         });
     }
 
-    private void onData(ArrayList<NewsDataModel> dataModels) {
+    @Override
+    public int getTotalPages() {
+        return mTotalPages;
+    }
 
+    @Override
+    public int getCurrentPage() {
+        return mCurrentPage;
+    }
+
+    @Override
+    public boolean isPageLoading() {
+        return mIsLoading;
+    }
+
+    @Override
+    public String getCurrentCategory() {
+        return mCurrentCategory;
+    }
+
+    private void onData(ApiResponse apiResponse) {
+        mTotalPages = apiResponse.getNbPages();
+        mCurrentPage = apiResponse.getPage();
         if (mHackerNewsEventsList != null && !mHackerNewsEventsList.isEmpty()) {
             for (IHackerNewsEvents events : mHackerNewsEventsList) {
-                events.onNewsResult(dataModels);
+                events.onNewsResult(apiResponse.getHits());
             }
         }
     }
@@ -112,4 +140,6 @@ public class HackerNewsModel implements HackerNewsContract.ModelUpdates {
             }
         }
     }
+
+
 }

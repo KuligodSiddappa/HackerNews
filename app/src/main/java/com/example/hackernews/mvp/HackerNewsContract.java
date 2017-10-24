@@ -22,6 +22,12 @@ public interface HackerNewsContract {
         void onButtonClick(int buttonType);
 
         void start();
+
+        int getTotalPages();
+        int getCurrentPage();
+        boolean isPageLoading();
+        String getCurrentCategory();
+        void queryNews(String category, int page);
     }
 
 
@@ -56,6 +62,10 @@ public interface HackerNewsContract {
      */
     interface ModelUpdates {
         void queryNews(String category, int page);
+        int getTotalPages();
+        int getCurrentPage();
+        boolean isPageLoading();
+        String getCurrentCategory();
     }
 
 }
