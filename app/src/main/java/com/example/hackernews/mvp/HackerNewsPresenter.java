@@ -36,18 +36,18 @@ public class HackerNewsPresenter implements HackerNewsContract.ViewEvents,
 
     @Override
     public void onButtonClick(int buttonType) {
-        switch(buttonType){
+        switch (buttonType) {
             case Utils.SPORTS:
-                mModel.queryNews(EndApi.SPORTS);
+                mModel.queryNews(EndApi.SPORTS, Utils.DEFAULT_PAGE);
                 break;
             case Utils.BOLLYWOOD:
-                mModel.queryNews(EndApi.BOLLYWOOD);
+                mModel.queryNews(EndApi.BOLLYWOOD, Utils.DEFAULT_PAGE);
                 break;
             case Utils.POLITICS:
-                mModel.queryNews(EndApi.POLITICS);
+                mModel.queryNews(EndApi.POLITICS, Utils.DEFAULT_PAGE);
                 break;
             case Utils.ART:
-                mModel.queryNews(EndApi.ARTS);
+                mModel.queryNews(EndApi.ARTS, Utils.DEFAULT_PAGE);
                 break;
         }
 

@@ -130,4 +130,5 @@ public class HomeActivity extends AppCompatActivity implements HackerNewsContrac
             break;
         }
     }
+
 }

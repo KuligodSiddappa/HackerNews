@@ -55,7 +55,7 @@ public interface HackerNewsContract {
      * Handles all data business logic.
      */
     interface ModelUpdates {
-        void queryNews(String category);
+        void queryNews(String category, int page);
     }
 
 }

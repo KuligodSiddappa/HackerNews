@@ -76,8 +76,8 @@ public class HackerNewsModel implements HackerNewsContract.ModelUpdates {
     }
 
     @Override
-    public void queryNews(String category) {
-        Call<ApiResponse> call = mRetrofit.create(IApiEvents.class).loadData(category);
+    public void queryNews(String category, int page) {
+        Call<ApiResponse> call = mRetrofit.create(IApiEvents.class).loadData(category, page);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

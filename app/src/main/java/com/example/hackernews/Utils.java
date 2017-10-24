@@ -11,6 +11,7 @@ public class Utils {
     public static final int BOLLYWOOD = 1;
     public static final int POLITICS = 2;
     public static final int ART = 3;
+    public static final int DEFAULT_PAGE = 0;
 
     /**
      * Ensures that an object reference passed as a parameter to the calling method is not null.

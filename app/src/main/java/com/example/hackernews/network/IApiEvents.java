@@ -9,5 +9,5 @@ import retrofit2.http.Query;
 public interface IApiEvents {
 
     @GET(EndApi.SEARCH)
-    Call<ApiResponse> loadData(@Query("query") String query);
+    Call<ApiResponse> loadData(@Query("query") String query,@Query("page") int page);
 }

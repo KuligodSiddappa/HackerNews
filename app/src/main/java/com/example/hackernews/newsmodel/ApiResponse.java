@@ -6,14 +6,14 @@ import java.util.ArrayList;
 public class ApiResponse {
 
     private ArrayList<NewsDataModel> hits = new ArrayList<>();
-    private String page;
+    private int page;
     private String query;
     private String processingTimeMS;
     private String params;
     private String exhaustiveNbHits;
     private String nbHits;
     private String hitsPerPage;
-    private String nbPages;
+    private int nbPages;
 
     public ArrayList<NewsDataModel> getHits() {
         return hits;
@@ -23,11 +23,11 @@ public class ApiResponse {
         this.hits = hits;
     }
 
-    public String getPage() {
+    public int getPage() {
         return page;
     }
 
-    public void setPage(String page) {
+    public void setPage(int page) {
         this.page = page;
     }
 
@@ -79,11 +79,11 @@ public class ApiResponse {
         this.hitsPerPage = hitsPerPage;
     }
 
-    public String getNbPages() {
+    public int getNbPages() {
         return nbPages;
     }
 
-    public void setNbPages(String nbPages) {
+    public void setNbPages(int nbPages) {
         this.nbPages = nbPages;
     }
 }
